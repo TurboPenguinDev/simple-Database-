@@ -27,18 +27,6 @@ def main():
     currentuser = ""
 
     while running:
-        '''
-        Quit:   | Verlassen des Datenbanksystems        Done
-        Login:  | Als User einloggen wenn kein User angemeldet ist      Done
-        Change: | Als User wechseln
-        Logout: | Als User ausloggen        Done
-        Status: | Momentan angemeldeten User ausgeben    Done    
-        Add:    | Hinzufuegen von Nutzer Datenuten      Done
-        Edit:   | Editieren von Nutzer Daten        Done
-        Print:  | Ausgabe von aller Nutzer Daten        Done
-        Pwu:    | Gebe einen User aus, abhaengig vom Namen      Done
-        Find:   | Ausgabe bestimmter Nutzer Daten anhand von Suchkriterien (z.B. Name, Alter, Email)        Done with AI (Noch mit Alex/David drüber schauen)
-        '''
         
         print("---- Database System ----")
         

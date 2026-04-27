@@ -52,7 +52,7 @@ def main():
         print("2:  Login   3: Logout   4: Change   5: Status")
         print("6:  Add     7: Edit     8: Print    9: Pwu")
         print("10: Find")
-
+        print("-------------------------")
         print("Selection: ",end="")
 
         cmd = input().lower()
@@ -65,6 +65,9 @@ def main():
             print("Rights: ",end="")
             right = input().capitalize()
             user.append(right)
+            if right not in ("Admin", "Editor", "Read-only", "Moderator"):
+                print("This Role does not exist!")
+                continue
 
             print("Name: ",end="")
             name = input().capitalize()
@@ -106,14 +109,18 @@ def main():
                     print("Address: " + user[5])
 
         elif cmd == "edit":
-            edited_user = input("Welchen User möchtest du bearbeiten: ")
+            if user[0] == ("Admin") or ("Moderator"):
+                pass
+            else:
+                print("You do not have the neccessary rights!")
+            edited_user = input("Which user do you want to edit: ")
             user = get_user(db, edited_user)
     
             if user is None:
-                print("Dieser User wurde nicht gefunden!")
+                print("User not found!")
 
             else:
-                print("Welches Attribut möchtest du ändern?")
+                print("What do you want to enter")
                 print("1: Rights  2: Name  3: Password  4: Age  5: Email  6: Address")
                 field = input("Selection: ")
 
@@ -144,7 +151,7 @@ def main():
             currentuser = ""
 
         elif cmd == "pwu": 
-            pwuser = input("Welchen User möchtest du anhand des Namens finden? \nUser: ")
+            pwuser = input("Which user do u want to find (please enter only the name)? \nUser: ")
             user = get_user(db, pwuser)
 
             if user == None:
@@ -159,18 +166,15 @@ def main():
                 print("Email: " + user[4])
                 print("Address: " + user[5])
 
-        elif cmd == "current user":
-            print (currentuser)
-
         elif cmd == "find":
-            print("Wonach möchtest du suchen?")
+            print("What do you want to search?")
             print("1: Rights  2: Name  3: Age  4: Email  5: Address")
-            field = int(input("Suchfeld: ")) - 1
-            value = input("Suchwert: ")
+            field = int(input("Catagory: ")) - 1
+            value = input("Value: ")
 
-            print("Was soll ausgegeben werden? (mehrere mit Komma: 1,2,4)")
+            print("What do you want to be displayed? (multiple with colon: 1,2,4)")
             print("1: Rights  2: Name  3: Password  4: Age  5: Email  6: Address")
-            output_fields = input("Ausgabe: ").split(",")  # → ["1", "2", "4"]
+            output_fields = input("Output: ").split(",")  # → ["1", "2", "4"]
 
             field_names = ["Rights", "Name", "Password", "Age", "Email", "Address"]
 
@@ -180,6 +184,33 @@ def main():
                     for f in output_fields:
                         index = int(f) - 1
                         print(field_names[index] + ": " + str(user[index]))
+
+        elif cmd == "change":
+            print("Password of the current user: ")
+            password = input()
+            if not cmp_pw(db,username,password):
+                print("Error: password does not match user!")
+                print("-------------------------\n")
+                continue
+
+            currentuser = input("Please enter the user u want to change to: ")
+
+            print("Password: ",end="")
+            password = input()
+            if not cmp_pw(db,username,password):
+                print("Error: password does not match user!")
+                print("-------------------------\n")
+                continue
+
+        elif cmd == "status":
+            user = get_user(db, currentuser)
+            print("")
+            print("Rights: " + user[0])
+            print("Name:" + user[1])
+            print("Password: " + user[2])
+            print("Age: " + str(user[3]))
+            print("Email: " + user[4])
+            print("Address: " + user[5])
 
         print("-------------------------\n")
 

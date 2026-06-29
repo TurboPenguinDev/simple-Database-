@@ -1,5 +1,6 @@
 import json
 import os
+from functools import cmp_to_key, partial
  
 DB_FILE = "database.json"
  
@@ -74,19 +75,76 @@ def cmd_add(state):
             state["db"].append(user)
             save_db(state["db"])
 
+def compare_name(state, a, b):
+    user1 = state["db"][a]
+    user2 = state["db"][b]
+    
+    if user1[1] < user2[1]:
+        return -1
+    elif user1[1] > user2[1]:
+        return 1
+    else:
+        return 0
+    
+def compare_age(state, a, b):
+    user1 = state["db"][a]
+    user2 = state["db"][b]
+    
+    if user1[3] < user2[3]:
+        return -1
+    elif user1[3] > user2[3]:
+        return 1
+    else:
+        return 0
+
 def cmd_print(state):
-    print("What user do u want to print?\n> ", end="")
+    print("What user do you want to print?\n" "If you want to print all users type 'all' or 'everyone'\n> ", end="")
     name = input()
 
-    for user in state["db"]:
-        if name == user[1]:
-            print()
-            print("Rights: \t" + user[0])
-            print("Name: \t\t" + user[1])
-            print("Password: \t" + user[2])
-            print("Age: \t\t" + str(user[3]))
-            print("Email: \t\t" + user[4])
-            print("Address: \t" + user[5])
+    if name.lower() in ["all" , "everyone"]:
+        print("\nChoose which field they should be sorted by: 1: name ; 2: age")
+        sortmethod = input()
+        
+        if sortmethod == "1":
+            indices = list(range(0,len(state["db"])))
+            indices.sort(key=cmp_to_key(partial(compare_name, state)))
+            
+            for i in indices:
+                user = state["db"][i]
+                print()
+                print("Rights: \t" + user[0])
+                print("Name: \t\t" + user[1])
+                print("Password: \t" + user[2])
+                print("Age: \t\t" + str(user[3]))
+                print("Email: \t\t" + user[4])
+                print("Address: \t" + user[5])
+
+        elif sortmethod == "2":
+            indices = list(range(0,len(state["db"])))
+            indices.sort(key=cmp_to_key(partial(compare_age, state)))
+            
+            for i in indices:
+                user = state["db"][i]
+                print()
+                print("Rights: \t" + user[0])
+                print("Name: \t\t" + user[1])
+                print("Password: \t" + user[2])
+                print("Age: \t\t" + str(user[3]))
+                print("Email: \t\t" + user[4])
+                print("Address: \t" + user[5])
+
+        else:
+            print("Error: Index does not exist!")
+    else:
+        for user in state["db"]:
+            if name == user[1]:
+                print()
+                print("Rights: \t" + user[0])
+                print("Name: \t\t" + user[1])
+                print("Password: \t" + user[2])
+                print("Age: \t\t" + str(user[3]))
+                print("Email: \t\t" + user[4])
+                print("Address: \t" + user[5])
 
 def cmd_edit(state):
     if state["currentuser"] == ("Admin") or ("Moderator"):
@@ -198,8 +256,8 @@ def main():
     state = {
         "running": True,
         "db": load_db(),
-        "currentuser": ""
-        "username"
+        "currentuser": "",
+        
     }
     
     while state["running"]:
@@ -253,6 +311,10 @@ def main():
             cmd_change(state)
         elif cmd == "status":
             cmd_status(state)
+        elif cmd == "print":
+            cmd_status(state)
+        
+ 
  
         print("-------------------------\n")
  

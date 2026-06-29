@@ -6,5 +6,59 @@
     0,
     "-",
     "-"
+  ],
+  [
+    "Moderator",
+    "Alex",
+    "abc",
+    14,
+    "htmlaufdieeins@gmail.com",
+    "Musterstrasse 1"
   ]
+  ,
+
+  [
+    "Moderator",
+    "David",
+    "abc",
+    33,
+    "htmlaufdieeins@gmail.com",
+    "Musterstrasse 1"
+  ],
+  [
+    "Moderator",
+    "Andi",
+    "abc",
+    16,
+    "htmlaufdieeins@gmail.com",
+    "Musterstrasse 1"
+  ],
+
+  [
+    "Moderator",
+    "Marc",
+    "abc",
+    16,
+    "htmlaufdieeins@gmail.com",
+    "Musterstrasse 1"
+  ],
+
+  [
+    "Moderator",
+    "Yanis",
+    "abc",
+    27,
+    "htmlaufdieeins@gmail.com",
+    "Musterstrasse 1"
+  ],
+
+  [
+    "Moderator",
+    "Nick",
+    "abc",
+    19,
+    "htmlaufdieeins@gmail.com",
+    "Musterstrasse 1"
+  ]
+  
 ]
